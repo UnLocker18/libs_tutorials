@@ -5,15 +5,14 @@
   <img src="https://user-images.githubusercontent.com/8225057/46304087-00035580-c5ae-11e8-8904-f27a9434574a.gif" width="600px">
 </p>
 
-[ImGui](https://www.ImGui.com/) is an open source C++ physics engine library that can be used in 3D simulations and games.
-It's quite easy to use and you'll probably be familiar with some of its basic concepts if you used a game engine like Unity before.
-In this tutorial we'll see how to build and install it, how to link it inside a Visual Studio project and how to use it together with GLUT.
-
-Useful links:
-- [GitHub repository](https://github.com/DanielChappuis/ImGui)
-- [Documentation](https://www.ImGui.com/documentation.html)
+[Dear ImGui](https://github.com/ocornut/imgui) is a graphical user interface library for C++. It is fast, portable, renderer agnostic and self-contained (no external dependencies).
+It is designed to enable fast iterations and to empower programmers to create content creation tools and visualization / debug tools (as opposed to UI for the average end-user).
 
 ## Installing the library
+
+The core of Dear ImGui is self-contained within a few platform-agnostic files which you can easily compile in your application/engine. They are all the files in the root folder of the repository (imgui*.cpp, imgui*.h).
+
+No specific build process is required. You can add the .cpp files to your existing project.
 
 ### Download the library
 If you don't need the latest version of the library you can skip the building step and download files from [here]() (these files were built using Debug mode and Win32 platform).
