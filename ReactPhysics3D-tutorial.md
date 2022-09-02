@@ -12,7 +12,7 @@ Useful links:
 
 ### Download pre-built library
 If you don't need the latest version of the library you can skip the building step and download files from [here]() (these files were built using Debug mode and Win32 platform).
-Once you've done that you can go to the [install section]().
+Once you've done that you can go to the [install section](###use-the-library-inside-your-vs-project).
 
 ### Build the library manually
 Use the following command to clone the ReactPhysics3D repository.
@@ -34,7 +34,7 @@ Then you have to select the generator and the platform you want to use to build 
   <img src="img/rp3d/cmake2.png" width="400px">
 </p>
 
-Now you can change the generator settings, CMAKE_INSTALL_PREFIX is the folder where you will find library files in the end of the building process. If you check RP3D_COMPILE_TESTBED cmake will also generate the folder of the testbed application where you will find a .sln file containing a lot of more advanced examples, more about that in the [testbed section of user manual]().
+Now you can change the generator settings, CMAKE_INSTALL_PREFIX is the folder where you will find library files in the end of the building process. If you check RP3D_COMPILE_TESTBED cmake will also generate the folder of the testbed application where you will find a .sln file containing a lot of more advanced examples, more about that in the [testbed section](https://www.reactphysics3d.com/usermanual#x1-7500014) of the user manual.
 
 After that click "Generate" and cmake will create the project that you can use to build the library.
 
