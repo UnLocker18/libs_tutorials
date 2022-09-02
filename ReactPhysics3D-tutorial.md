@@ -12,7 +12,7 @@ Useful links:
 
 ### Download pre-built library
 If you don't need the latest version of the library you can skip the building step and download files from [here]() (these files were built using Debug mode and Win32 platform).
-Once you've done that you can go to the [install section](###-use-the-library-inside-your-vs-project).
+Once you've done that you can go to the [install section](#use-the-library-inside-your-vs-project).
 
 ### Build the library manually
 Use the following command to clone the ReactPhysics3D repository.
@@ -85,22 +85,22 @@ Add the name of ReactPhysics3D's .lib file inside the "Additional dependencies" 
   <img src="img/rp3d/lib_dep.png" width="600px">
 </p>
 
-Now you can copy and run the [HelloWorld]() script from ReactPhysics3D to check that everything is working correctly.
+Now you can copy and run the [HelloWorld](#reactphysics3d-helloworld) script from ReactPhysics3D to check that everything is working correctly.
 
 <p  align="center">
   <img src="img/rp3d/hello_world.png" width="1000px">
 </p>
 
-For further details about building and installing the library you can check out section 4 and 5 of the [user manual](https://www.reactphysics3d.com/usermanual).
+For further details about building and installing the library you can check out section [4](https://www.reactphysics3d.com/usermanual#x1-50004) and [5](https://www.reactphysics3d.com/usermanual#x1-160005) of the user manual.
 
 ## Usage
-In the user manual you can find detailed descriptions of how to use the various features of the library, [section 6](https://www.reactphysics3d.com/usermanual#x1-170006) is about what you have seen in the HelloWorld.
+In the user manual you can find detailed descriptions of how to use the various features of the library, [section 6](https://www.reactphysics3d.com/usermanual#x1-170006) is about what you have seen in the HelloWorld. There's also an [API documentation](https://www.reactphysics3d.com/documentation/api/html/index.html).
 
 ### Integration with GLUT
 
 Now that you have ReactPhysics3D at your disposal you can build a basic application that applies physics to objects rendered using GLUT. The result will look like this.
 
-Full code of the example [here]().
+Full code of the example [here](#integration-of-reactphysics3d-with-glut).
 
 <p  align="center">
   <img src="img/rp3d/rp3d_glut_example.gif" width="600px">
@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-### Integrazione di ReactPhysics3D con GLUT
+### Integration of ReactPhysics3D with GLUT
 ```c++
 /* 
 	Example of ReactPhysics3D integration with GLUT
