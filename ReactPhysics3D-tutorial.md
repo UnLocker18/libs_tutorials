@@ -67,28 +67,34 @@ Dopo aver ottenuto i file della libreria è necessario modificare le proprietà 
 Aggiungi il percorso alla cartella include di ReactPhysics3D in additional include directories
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="800px">
+  <img src="img/rp3d/include_dir.png" width="800px">
 </p>
 
 Aggiungi il percorso alla cartella lib di ReactPhysics3D in additional lib directories
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="800px">
+  <img src="img/rp3d/lib_dir.png" width="800px">
 </p>
 
 Aggiungi il nome del file lib alle dipendenze aggiuntive
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="800px">
+  <img src="img/rp3d/lib_dep.png" width="800px">
 </p>
 
-A questo punto puoi provare ad eseguire l'helloworld per verificare il funzionamento
+A questo punto puoi provare ad eseguire l'helloworld[link] per verificare il funzionamento
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="800px">
+  <img src="img/rp3d/hello_world.png" width="800px">
 </p>
 
-#### ReactPhysics3D HelloWorld
+## Utilizzo
+intro
+
+### Integrazione con glut
+
+## Esempi
+### ReactPhysics3D HelloWorld
 ```c++
 // Libraries 
 #include <reactphysics3d/reactphysics3d.h> 
@@ -135,12 +141,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-## Utilizzo
-intro
-
-### Integrazione con glut
-
-#### Esempio
+### Integrazione di ReactPhysics3D con GLUT
 ```c++
 /* 
 	Example of ReactPhysics3D integration with GLUT
