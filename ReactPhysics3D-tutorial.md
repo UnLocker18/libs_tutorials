@@ -1,103 +1,181 @@
 
-# Tutorial: usare ReactPhysics3D con GLUT
-ReactPhysics3D is an open source C++ physics engine library that can be used in 3D simulations and games.
-https://www.reactphysics3d.com/
-https://github.com/DanielChappuis/reactphysics3d
-https://www.reactphysics3d.com/documentation.html
+# Tutorial: how to use ReactPhysics3D with GLUT
+[ReactPhysics3D](https://www.reactphysics3d.com/) is an open source C++ physics engine library that can be used in 3D simulations and games.
+It's quite easy to use and you'll probably be familiar with some of its basic concepts if you used a game engine like Unity before.
+In this tutorial we'll see how to build and install it, how to link it inside a Visual Studio project and how to use it together with GLUT.
 
-## Installazione
-Per ultreiori dettagli https://www.reactphysics3d.com/usermanual
+Useful links:
+- [GitHub repository](https://github.com/DanielChappuis/reactphysics3d)
+- [Documentation](https://www.reactphysics3d.com/documentation.html)
 
-### Scarica la libreria precompilata
-[link]
-Scarica i file e passa direttamente alla sezione [link]
+## Building and installing the library
 
-### Compila manualmente la libreria
-Usa il seguente comando per scaricare la repository di ReactPhysics3D.
+### Download pre-built library
+If you don't need the latest version of the library you can skip the building step and download files from [here]() (these files were built using Debug mode and Win32 platform).
+Once you've done that you can go to the [install section]().
+
+### Build the library manually
+Use the following command to clone the ReactPhysics3D repository.
 ```
 git clone https://github.com/DanielChappuis/reactphysics3d.git
 ```
 
-Se non hai cmake installato sul pc scaricalo ed installalo https://cmake.org/download/
+If you don't have it already you also need to downlaod and install [cmake](https://cmake.org/download/).
 
-Apri cmake gui
-Inserisci il percorso della cartella in cui è stata clonata la repository ed un percorso per una cartella di output, poi clicca configure.
+Once you have cloned the repo you have to open cmake-gui and put the path to source code (the root directory of the repo you just cloned) and the path to the destination folder of your choice. Then you can click "Configure".
 
 <p  align="center">
   <img src="img/rp3d/cmake1.png" width="400px">
 </p>
 
-Seleziona il generator che vuoi utilizzare e la piattaforma con cui vuoi che sia compilata la libreria.
+Then you have to select the generator and the platform you want to use to build the library. It is important that you choose the platform used by your project.
 
 <p  align="center">
   <img src="img/rp3d/cmake2.png" width="400px">
 </p>
 
-Cambia impostazioni se necessario, da qui puoi decidere la cartella di output che sarà usata in fase di installazione e se compilare anche la testbed application in cui sono presenti vari esempi di utilizzo di cui puoi esplorare il codice [link alla sezione del manuale].
-Clicca generate
+Now you can change the generator settings, CMAKE_INSTALL_PREFIX is the folder where you will find library files in the end of the building process. If you check RP3D_COMPILE_TESTBED cmake will also generate the folder of the testbed application where you will find a .sln file containing a lot of more advanced examples, more about that in the [testbed section of user manual]().
+
+After that click "Generate" and cmake will create the project that you can use to build the library.
 
 <p  align="center">
   <img src="img/rp3d/cmake3.png" width="400px">
 </p>
 
-Apri la soluzione di vs nella cartella di output
+Now open the .sln file inside the destination folder you set up before configuring with cmake.
 
 <p  align="center">
   <img src="img/rp3d/open_sln.png" width="400px">
 </p>
 
-Scegli modalità di compilazione in modo che coincida con quelle del progetto e verifica che la piattaforma sia quella scelta allo step x.
-Tasto destro su reactphysics3d -> compila
+After that you have to choose the correct mode (Release/Debug), this also needs to match what you will use to build the project. You can also check that the selected platform is the right one.
+
+Then you have to right click on the reactphysics3d project and after that on "Build". Visual Studio will now build the library, wait for it to finish.
 
 <p  align="center">
   <img src="img/rp3d/build_rp3d.png" width="1000px">
 </p>
 
-Poi tasto destro su install -> compila
+To complete the process right click on the project "INSTALL" and build it.
 
 <p  align="center">
   <img src="img/rp3d/build_install.png" width="1000px">
 </p>
 
-Nella cartella di output che avevi impostato con cmake troverai i file da portare nel tuo progetto
+Now you will find all the necessary files to use the library in your project inside the folder you specified before generating with cmake (the CMAKE_INSTALL_PREFIX setting).
 
-### Aggiungi la libreria al progetto VS
-Dopo aver ottenuto i file della libreria è necessario modificare le proprietà del progetto in questo modo:
+### Use the library inside your VS project
+Now that you have all the files you need you can open your Visual Studio project and edit the following properties (be sure to edit properties of the right configuration).
 
-Aggiungi il percorso alla cartella include di ReactPhysics3D in additional include directories
+Add the path to ReactPhysics3D's include directory inside the "Additional include directories" setting under the "C/C++" section of the properties.
 
 <p  align="center">
   <img src="img/rp3d/include_dir.png" width="600px">
 </p>
 
-Aggiungi il percorso alla cartella lib di ReactPhysics3D in additional lib directories
+Add the path to ReactPhysics3D's lib directory inside the "Additional lib directories" setting under the "Linker->General" section of the properties.
 
 <p  align="center">
   <img src="img/rp3d/lib_dir.png" width="600px">
 </p>
 
-Aggiungi il nome del file lib alle dipendenze aggiuntive
+Add the name of ReactPhysics3D's .lib file inside the "Additional dependencies" setting under the "Linker->Input" section of the properties.
 
 <p  align="center">
   <img src="img/rp3d/lib_dep.png" width="600px">
 </p>
 
-A questo punto puoi provare ad eseguire l'helloworld[link] per verificare il funzionamento
+Now you can copy and run the [HelloWorld]() script from ReactPhysics3D to check that everything is working correctly.
 
 <p  align="center">
   <img src="img/rp3d/hello_world.png" width="1000px">
 </p>
 
-## Utilizzo
-intro
+For further details about building and installing the library you can check out section 4 and 5 of the [user manual](https://www.reactphysics3d.com/usermanual).
 
-### Integrazione con glut
+## Usage
+In the user manual you can find detailed descriptions of how to use the various features of the library, [section 6](https://www.reactphysics3d.com/usermanual#x1-170006) is about what you have seen in the HelloWorld.
+
+### Integration with GLUT
+
+Now that you have ReactPhysics3D at your disposal you can build a basic application that applies physics to objects rendered using GLUT. The result will look like this.
+
+Full code of the example [here]().
 
 <p  align="center">
   <img src="img/rp3d/rp3d_glut_example.gif" width="600px">
 </p>
 
-## Esempi
+You can start with a basic GLUT application that draws, for example, a cube and a floor.
+
+To handle physics you have to start with a PhysicsCommon and a PhysicsWorld and then create a RigidBody, like in the HelloWorld.
+
+Global variables:
+```c++
+PhysicsCommon physicsCommon;
+PhysicsWorld *world = physicsCommon.createPhysicsWorld();
+const decimal timeStep = 1.0f / 60.0f;
+
+Vector3 cubeSize(0.5, 0.5, 0.5);
+Vector3 cubeInitPosition(0, 0.5, 0);
+Quaternion cubeInitOrientation = Quaternion::fromEulerAngles(DegToRad(10), DegToRad(30), 0);
+RigidBody *cubeBody;
+
+Vector3 floorSize(5, 0.4, 2);
+Vector3 floorInitPosition(0, -0.8, 0);
+Quaternion floorInitOrientation = Quaternion::identity();
+RigidBody *floorBody;
+```
+
+Inside the init function:
+```c++
+Transform cubeTransform(cubeInitPosition, cubeInitOrientation);
+cubeBody = world->createRigidBody(cubeTransform);
+
+Transform floorTransform(floorInitPosition, floorInitOrientation);
+floorBody = world->createRigidBody(floorTransform);
+```
+
+For this example you also need to account for collisions, so after creating the RigidBody you have to add a collider to it. The last step for what concerns initialization is to set floor's RigidBody type to "static".
+
+```c++
+BoxShape *cubeShape = physicsCommon.createBoxShape(cubeSize * 0.5);
+cubeBody->addCollider(cubeShape, rp3d::Transform::identity());
+
+BoxShape *floorShape = physicsCommon.createBoxShape(floorSize * 0.5);
+floorBody->addCollider(floorShape, rp3d::Transform::identity());
+floorBody->setType(BodyType::STATIC);
+```
+
+Now that the RigidBodies' setup is complete you just need to call the update function of the PhysicsWorld inside the idle callback.
+
+```c++
+world->update(timeStep);
+glutPostRedisplay();
+```
+
+The next step is to draw GLUT primitives in the right places, to do that you can (inside the display callback) get the current transform of the RigidBody, extract the corresponding homogeneus transformation matrix from it and multiply the matrix by the primitive you need to draw.
+
+```c++
+float cubeHTM[16];
+Transform cubeTransform = cubeBody->getTransform();
+cubeTransform.getOpenGLMatrix(cubeHTM);
+glMultMatrixf(cubeHTM);
+glScalef(cubeSize.x, cubeSize.y, cubeSize.z);
+glutSolidCube(1);
+```
+
+To complete this basic example you can also set a couple of custom properties for the cube's RigidBody.
+
+Inside the init function:
+```c++
+cubeBody->setMass(0.8);
+cubeBody->getCollider(0)->getMaterial().setBounciness(0.4);
+```
+
+Congrats! You have completed the tutorial.
+
+## Examples
 ### ReactPhysics3D HelloWorld
 ```c++
 // Libraries 
