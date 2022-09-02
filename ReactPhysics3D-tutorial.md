@@ -1,5 +1,11 @@
 
 # Tutorial: how to use ReactPhysics3D with GLUT
+
+
+<p  align="center">
+  <img src="https://github.com/DanielChappuis/reactphysics3d/blob/images/showreel.gif" width="600px">
+</p>
+
 [ReactPhysics3D](https://www.reactphysics3d.com/) is an open source C++ physics engine library that can be used in 3D simulations and games.
 It's quite easy to use and you'll probably be familiar with some of its basic concepts if you used a game engine like Unity before.
 In this tutorial we'll see how to build and install it, how to link it inside a Visual Studio project and how to use it together with GLUT.
