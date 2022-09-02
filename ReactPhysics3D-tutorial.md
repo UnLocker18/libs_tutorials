@@ -98,13 +98,13 @@ In the user manual you can find detailed descriptions of how to use the various 
 
 ### Integration with GLUT
 
-Now that you have ReactPhysics3D at your disposal you can build a basic application that applies physics to objects rendered using GLUT. The result will look like this.
-
-Full code of the example [here](#integration-of-reactphysics3d-with-glut).
+Now that you have ReactPhysics3D at your disposal you can build a basic application that applies physics to objects rendered using GLUT. The result will look like this:
 
 <p  align="center">
   <img src="img/rp3d/rp3d_glut_example.gif" width="600px">
 </p>
+
+Full code of the example [here](#integration-of-reactphysics3d-with-glut).
 
 You can start with a basic GLUT application that draws, for example, a cube and a floor.
 
