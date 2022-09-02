@@ -1,6 +1,6 @@
 
-# Usare ReactPhysics3D con GLUT
-breve descrizione
+# Tutorial: usare ReactPhysics3D con GLUT
+ReactPhysics3D is an open source C++ physics engine library that can be used in 3D simulations and games.
 https://www.reactphysics3d.com/
 https://github.com/DanielChappuis/reactphysics3d
 https://www.reactphysics3d.com/documentation.html
@@ -24,39 +24,39 @@ Apri cmake gui
 Inserisci il percorso della cartella in cui è stata clonata la repository ed un percorso per una cartella di output, poi clicca configure.
 
 <p  align="center">
-  <img src="img/rp3d/cmake1.png" width="800px">
+  <img src="img/rp3d/cmake1.png" width="400px">
 </p>
 
 Seleziona il generator che vuoi utilizzare e la piattaforma con cui vuoi che sia compilata la libreria.
 
 <p  align="center">
-  <img src="img/rp3d/cmake2.png" width="800px">
+  <img src="img/rp3d/cmake2.png" width="400px">
 </p>
 
 Cambia impostazioni se necessario, da qui puoi decidere la cartella di output che sarà usata in fase di installazione e se compilare anche la testbed application in cui sono presenti vari esempi di utilizzo di cui puoi esplorare il codice [link alla sezione del manuale].
 Clicca generate
 
 <p  align="center">
-  <img src="img/rp3d/cmake3.png" width="800px">
+  <img src="img/rp3d/cmake3.png" width="400px">
 </p>
 
 Apri la soluzione di vs nella cartella di output
 
 <p  align="center">
-  <img src="img/rp3d/open_sln.png" width="800px">
+  <img src="img/rp3d/open_sln.png" width="400px">
 </p>
 
 Scegli modalità di compilazione in modo che coincida con quelle del progetto e verifica che la piattaforma sia quella scelta allo step x.
 Tasto destro su reactphysics3d -> compila
 
 <p  align="center">
-  <img src="img/rp3d/build_rp3d.png" width="800px">
+  <img src="img/rp3d/build_rp3d.png" width="1000px">
 </p>
 
 Poi tasto destro su install -> compila
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="800px">
+  <img src="img/rp3d/build_install.png" width="1000px">
 </p>
 
 Nella cartella di output che avevi impostato con cmake troverai i file da portare nel tuo progetto
@@ -67,31 +67,35 @@ Dopo aver ottenuto i file della libreria è necessario modificare le proprietà 
 Aggiungi il percorso alla cartella include di ReactPhysics3D in additional include directories
 
 <p  align="center">
-  <img src="img/rp3d/include_dir.png" width="800px">
+  <img src="img/rp3d/include_dir.png" width="600px">
 </p>
 
 Aggiungi il percorso alla cartella lib di ReactPhysics3D in additional lib directories
 
 <p  align="center">
-  <img src="img/rp3d/lib_dir.png" width="800px">
+  <img src="img/rp3d/lib_dir.png" width="600px">
 </p>
 
 Aggiungi il nome del file lib alle dipendenze aggiuntive
 
 <p  align="center">
-  <img src="img/rp3d/lib_dep.png" width="800px">
+  <img src="img/rp3d/lib_dep.png" width="600px">
 </p>
 
 A questo punto puoi provare ad eseguire l'helloworld[link] per verificare il funzionamento
 
 <p  align="center">
-  <img src="img/rp3d/hello_world.png" width="800px">
+  <img src="img/rp3d/hello_world.png" width="1000px">
 </p>
 
 ## Utilizzo
 intro
 
 ### Integrazione con glut
+
+<p  align="center">
+  <img src="img/rp3d/rp3d_glut_example.gif" width="600px">
+</p>
 
 ## Esempi
 ### ReactPhysics3D HelloWorld
