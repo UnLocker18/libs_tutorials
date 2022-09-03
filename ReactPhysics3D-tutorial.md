@@ -17,7 +17,7 @@ Useful links:
 ## Building and installing the library
 
 ### Download pre-built library
-If you don't need the latest version of the library you can skip the building step and download files from [here]() (these files were built using Debug mode and Win32 platform).
+If you don't need the latest version of the library you can skip the building step, clone this repo and get files from the "reactphysics3d-build" folder (these files were built using Debug mode and Win32 platform).
 Once you've done that you can go to the [install section](#use-the-library-inside-your-vs-project).
 
 ### Build the library manually
