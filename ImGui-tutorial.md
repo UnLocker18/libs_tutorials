@@ -60,18 +60,49 @@ The [HelloWorld](#imgui-with-glut-backend-helloworld) example shows how to use s
 
 If you're working on a game-like application you'll probably need to have buttons and other stuff directly on the screen instead of having windows around, here's how to create a fullscreen invisible window that you can then populate with your UI.
 ```c++
+ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
+window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+window_flags |= ImGuiWindowFlags_NoDocking;
 
+ImGuiViewport* viewport = ImGui::GetMainViewport();
+ImGui::SetNextWindowPos(viewport->Pos);
+ImGui::SetNextWindowSize(viewport->Size);
+ImGui::SetNextWindowViewport(viewport->ID);    
+
+ImGui::Begin("Fullscreen window", NULL, window_flags);
+
+// Your UI here
+
+ImGui::End();
 ```
 
-If you downloaded the docking branch of ImGui you can also have docking enabled in your fullscreen window.
+If you downloaded the docking branch of ImGui you can also have docking enabled in your fullscreen window. To do that add this block of code inside the fullscreen window.
 ```c++
-
+ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags); 
 ```
 
 If you want to use Combos or Lists you may need to do that with vectors, for that you can implement a wrapper function like this:
 ```c++
-
+bool ListBox(const char* label, int* current_item, const std::vector<std::string>& items, int items_count, int height_in_items)
+{
+   return ImGui::ListBox(label, current_item, 
+   
+   [](void* vec, int idx, const char** out_text){
+          std::vector<std::string>* vector = reinterpret_cast<std::vector<std::string>*>(vec);
+          if(idx < 0 || idx >= vector->size()) { return false; }
+          *(out_text) = vector->at(idx).c_str();
+          return true;      
+      },
+    
+    (void*)&items, items_count, height_in_items);
+}
 ```
+and call it instead of ImGui::ListBox.
+
+Note that imgui will save its configuration inside a file called "imgui.ini", so that you reload the GUI keeping its layout when re-launching the application.
 
 ### Integration with GLUT
 As you have seen before ImGui has a backend for its usage with GLUT, so you don't need to do anything special to combine it with a GLUT based application. The HelloWorld example below shows everything you need for basic usage.
@@ -241,5 +272,212 @@ int main(int argc, char** argv)
 
 ### ImGui for game-like applications
 ```c++
+/* 
+	Example of ImGui usage inside a game-like application
+*/
+
+#include <windows.h>
+#include "imgui.h"
+#include "imgui_impl_glut.h"
+#include "imgui_impl_opengl2.h"
+#include <GL/glut.h>
+
+#ifdef _MSC_VER
+#pragma warning (disable: 4505) // unreferenced local function has been removed
+#endif
+
+#define XRES 800
+#define YRES 800
+
+// Our state
+bool showPauseMenu = false, spin = false;
+float cubePosition[] = {0, 0};
+float cubeColor[] = {0.2, 0.6, 0.6};
+float spinAngle = 0;
+
+void beginFullScreenWindow()
+{
+    // This will create a fullscreen window
+
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar;
+    window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+    window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    window_flags |= ImGuiWindowFlags_NoDocking;
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);    
+
+    ImGui::Begin("Fullscreen window", NULL, window_flags);    
+
+    // If you need a DockSpace inside your fullscreen window
+    //ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
+    //ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+    //ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags); 
+}
+
+// Util to center buttons easily
+bool ButtonCentered(const char* label, float alignment = 0.5f)
+{
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    float windowWidth = ImGui::GetWindowSize().x;
+    float buttonWidth = ImGui::CalcTextSize(label).x + style.FramePadding.x * 2.0f;
+
+    ImGui::SetCursorPosX((windowWidth - buttonWidth) * alignment);
+
+    return ImGui::Button(label);
+}
+
+// Util to center text easily
+void TextCentered(const char* text, float alignment = 0.5f)
+{
+    float windowWidth = ImGui::GetWindowSize().x;
+    float textWidth   = ImGui::CalcTextSize(text).x;
+
+    ImGui::SetCursorPosX((windowWidth - textWidth) * alignment);
+    ImGui::Text(text);
+}
+
+void drawGui()
+{
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+    if (!showPauseMenu)
+    {
+        ImGui::SetNextWindowBgAlpha(0.0f);      // To make the fullscreen window invisible
+        beginFullScreenWindow();
+        
+        ImGui::SetCursorPos(ImVec2(viewport->Size.x - 100, viewport->Size.y - 40));
+        if (ImGui::Button("Pause", ImVec2(60, 20))) showPauseMenu = true;
+
+        ImGui::SetCursorPos(ImVec2(40, viewport->Size.y - 40));
+        ImGui::SetNextItemWidth(viewport->Size.x * 0.2);
+        ImGui::DragFloat2("Position", cubePosition, 0.01);
+
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.9f, 0.2f, 0.0f, 1.0f));
+        ImGui::SetCursorPos(ImVec2((viewport->Size.x - 80) * 0.5, (viewport->Size.y - 30) * 0.5));
+        if (ImGui::Button("Spin", ImVec2(80, 30))) spin = !spin;
+        ImGui::PopStyleColor();
+
+        ImGui::End();
+    }
+    else
+    {
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.75f));
+        beginFullScreenWindow();
+
+        auto textWidth = ImGui::CalcTextSize("Pause menu").x;
+        ImGui::SetCursorPos(ImVec2((viewport->Size.x - textWidth) * 0.5, 40));
+        TextCentered("Pause menu");
+
+        ImGui::SetCursorPos(ImVec2(viewport->Size.x * 0.5, viewport->Size.y * 0.5));
+        if (ButtonCentered("Resume")) showPauseMenu = false;
+
+        ImGui::End();
+        ImGui::PopStyleColor();
+    }       
+}
+
+void drawCube()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(cubeColor[0], cubeColor[1], cubeColor[2]);
+    glPushMatrix();
+	glLoadIdentity();
+
+    glTranslatef(cubePosition[0], cubePosition[1], 0);
+    glRotatef(spinAngle, 0, 0, 1);
+
+	glutSolidCube(0.5);
+
+	glPopMatrix();
+    glFlush();
+}
+
+void glut_display_func()
+{
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL2_NewFrame();
+    ImGui_ImplGLUT_NewFrame();
+
+    drawGui();
+    drawCube();
+
+    // Rendering
+    ImGui::Render();
+    ImGuiIO& io = ImGui::GetIO();    
+    glViewport(0, 0, (GLsizei)io.DisplaySize.x, (GLsizei)io.DisplaySize.y);
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+    glutSwapBuffers();
+}
+
+void idle(void)
+{
+    if (spin && !showPauseMenu) spinAngle += 0.5;
+    glutPostRedisplay();
+}
+
+void keyboard(unsigned char key, int x, int y)
+{
+    ImGui_ImplGLUT_KeyboardFunc(key, x, y);     // Call ImGui keyboard funtion
+
+    switch (key)
+    {
+    case 32: // SPACEBAR
+        cubeColor[0] = 0.9;
+        break;
+    }
+}
+
+int main(int argc, char** argv)
+{
+    // Create GLUT window
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_MULTISAMPLE);
+    glutInitWindowSize(XRES, YRES);
+    glutCreateWindow("Dear ImGui GLUT+OpenGL2 Example");
+
+    glClearColor(0.1, 0.1, 0.1, 0.0);
+
+    // Setup GLUT display function
+    glutDisplayFunc(glut_display_func);
+    glutIdleFunc(idle);
+    glutKeyboardFunc(keyboard);
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable docking
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGLUT_Init();    
+
+    glutReshapeFunc(ImGui_ImplGLUT_ReshapeFunc);
+    glutMotionFunc(ImGui_ImplGLUT_MotionFunc);
+    glutMouseFunc(ImGui_ImplGLUT_MouseFunc);
+    glutKeyboardUpFunc(ImGui_ImplGLUT_KeyboardUpFunc);
+    glutSpecialFunc(ImGui_ImplGLUT_SpecialFunc);
+    glutSpecialUpFunc(ImGui_ImplGLUT_SpecialUpFunc);
+
+    ImGui_ImplOpenGL2_Init();
+
+    glutMainLoop();
+
+    // Cleanup
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplGLUT_Shutdown();
+    ImGui::DestroyContext();
+
+    return 0;
+}
 
 ```
