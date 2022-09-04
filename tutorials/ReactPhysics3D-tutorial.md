@@ -34,7 +34,7 @@ Once you have cloned the repo you have to open cmake-gui and put the path to sou
   <img src="img/rp3d/cmake1.png" width="400px">
 </p>
 
-Then you have to select the generator and the platform you want to use to build the library. It is important that you choose the platform used by your project.
+Then you have to select the generator and the platform you want to use to build the library (if you use Visual Studio as generator the output will be a project based on a .sln file). It is important that you choose the platform used by your project.
 
 <p  align="center">
   <img src="img/rp3d/cmake2.png" width="400px">
@@ -118,39 +118,39 @@ To handle physics you have to start with a PhysicsCommon and a PhysicsWorld and 
 
 Global variables:
 ```c++
-PhysicsCommon physicsCommon;
-PhysicsWorld *world = physicsCommon.createPhysicsWorld();
-const decimal timeStep = 1.0f / 60.0f;
+rp3d::PhysicsCommon physicsCommon;
+rp3d::PhysicsWorld *world = physicsCommon.createPhysicsWorld();
+const rp3d::decimal timeStep = 1.0f / 60.0f;
 
-Vector3 cubeSize(0.5, 0.5, 0.5);
-Vector3 cubeInitPosition(0, 0.5, 0);
-Quaternion cubeInitOrientation = Quaternion::fromEulerAngles(DegToRad(10), DegToRad(30), 0);
-RigidBody *cubeBody;
+rp3d::Vector3 cubeSize(0.5, 0.5, 0.5);
+rp3d::Vector3 cubeInitPosition(0, 0.5, 0);
+rp3d::Quaternion cubeInitOrientation = rp3d::Quaternion::fromEulerAngles(DegToRad(10), DegToRad(30), 0);
+rp3d::RigidBody *cubeBody;
 
-Vector3 floorSize(5, 0.4, 2);
-Vector3 floorInitPosition(0, -0.8, 0);
-Quaternion floorInitOrientation = Quaternion::identity();
-RigidBody *floorBody;
+rp3d::Vector3 floorSize(5, 0.4, 2);
+rp3d::Vector3 floorInitPosition(0, -0.8, 0);
+rp3d::Quaternion floorInitOrientation = rp3d::Quaternion::identity();
+rp3d::RigidBody *floorBody;
 ```
 
 Inside the init function:
 ```c++
-Transform cubeTransform(cubeInitPosition, cubeInitOrientation);
+rp3d::Transform cubeTransform(cubeInitPosition, cubeInitOrientation);
 cubeBody = world->createRigidBody(cubeTransform);
 
-Transform floorTransform(floorInitPosition, floorInitOrientation);
+rp3d::Transform floorTransform(floorInitPosition, floorInitOrientation);
 floorBody = world->createRigidBody(floorTransform);
 ```
 
 For this example you also need to account for collisions, so after creating the RigidBody you have to add a collider to it. The last step for what concerns initialization is to set floor's RigidBody type to "static".
 
 ```c++
-BoxShape *cubeShape = physicsCommon.createBoxShape(cubeSize * 0.5);
+rp3d::BoxShape *cubeShape = physicsCommon.createBoxShape(cubeSize * 0.5);
 cubeBody->addCollider(cubeShape, rp3d::Transform::identity());
 
-BoxShape *floorShape = physicsCommon.createBoxShape(floorSize * 0.5);
+rp3d::BoxShape *floorShape = physicsCommon.createBoxShape(floorSize * 0.5);
 floorBody->addCollider(floorShape, rp3d::Transform::identity());
-floorBody->setType(BodyType::STATIC);
+floorBody->setType(rp3d::BodyType::STATIC);
 ```
 
 Now that the RigidBodies' setup is complete you need to update the PhysicsWorld with a constant timestep. You can use a function like this:
@@ -175,7 +175,7 @@ The next step is to draw GLUT primitives in the right places, to do that you can
 
 ```c++
 float cubeHTM[16];
-Transform cubeTransform = cubeBody->getTransform();
+rp3d::Transform cubeTransform = cubeBody->getTransform();
 cubeTransform.getOpenGLMatrix(cubeHTM);
 glMultMatrixf(cubeHTM);
 glScalef(cubeSize.x, cubeSize.y, cubeSize.z);

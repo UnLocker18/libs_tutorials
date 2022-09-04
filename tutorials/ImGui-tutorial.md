@@ -111,7 +111,24 @@ Note that if you need to use other custom GLUT callbacks you have to replace:
 ```c++
 ImGui_ImplGLUT_InstallFuncs();
 ```
-with the usual glutXXXFunc passing your custom callback, then inside your callback you have to call ImGui_ImplGLUT_XXX. You can see how to do that in the [ImGui for game-like applications](#imgui-for-game-like-applications) example.
+with the usual glutXXXFunc passing your custom callback, then inside your callback you have to call ImGui_ImplGLUT_XXX:
+```c++
+void keyboard(unsigned char key, int x, int y)
+{
+    ImGui_ImplGLUT_KeyboardFunc(key, x, y);
+
+    // Your custom keyboard function here
+}
+
+glutKeyboardFunc(keyboard);
+```
+If you don't need to override all the callbacks used by ImGui you can of course setup the remaining ones like this:
+```c++
+glutReshapeFunc(ImGui_ImplGLUT_ReshapeFunc);
+glutMotionFunc(ImGui_ImplGLUT_MotionFunc);
+...
+```
+You can see all this stuff in action inside the [ImGui for game-like applications](#imgui-for-game-like-applications) example.
 
 ## Examples
 ### ImGui with GLUT backend HelloWorld
