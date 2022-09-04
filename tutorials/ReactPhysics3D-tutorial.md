@@ -31,13 +31,13 @@ If you don't have it already you also need to downlaod and install [cmake](https
 Once you have cloned the repo you have to open cmake-gui and put the path to source code (the root directory of the repo you just cloned) and the path to the destination folder of your choice. Then you can click "Configure".
 
 <p  align="center">
-  <img src="img/rp3d/cmake1.png" width="400px">
+  <img src="../img/rp3d/cmake1.png" width="400px">
 </p>
 
 Then you have to select the generator and the platform you want to use to build the library (if you use Visual Studio as generator the output will be a project based on a .sln file). It is important that you choose the platform used by your project.
 
 <p  align="center">
-  <img src="img/rp3d/cmake2.png" width="400px">
+  <img src="../img/rp3d/cmake2.png" width="400px">
 </p>
 
 Now you can change the generator settings, CMAKE_INSTALL_PREFIX is the folder where you will find library files in the end of the building process. If you check RP3D_COMPILE_TESTBED cmake will also generate the folder of the testbed application where you will find a .sln file containing a lot of more advanced examples, more about that in the [testbed section](https://www.reactphysics3d.com/usermanual#x1-7500014) of the user manual.
@@ -45,13 +45,13 @@ Now you can change the generator settings, CMAKE_INSTALL_PREFIX is the folder wh
 After that click "Generate" and cmake will create the project that you can use to build the library.
 
 <p  align="center">
-  <img src="img/rp3d/cmake3.png" width="400px">
+  <img src="../img/rp3d/cmake3.png" width="400px">
 </p>
 
 Now open the .sln file inside the destination folder you set up before configuring with cmake.
 
 <p  align="center">
-  <img src="img/rp3d/open_sln.png" width="400px">
+  <img src="../img/rp3d/open_sln.png" width="400px">
 </p>
 
 After that you have to choose the correct mode (Release/Debug), this also needs to match what you will use to build the project. You can also check that the selected platform is the right one.
@@ -59,13 +59,13 @@ After that you have to choose the correct mode (Release/Debug), this also needs 
 Then you have to right click on the reactphysics3d project and after that on "Build". Visual Studio will now build the library, wait for it to finish.
 
 <p  align="center">
-  <img src="img/rp3d/build_rp3d.png" width="1000px">
+  <img src="../img/rp3d/build_rp3d.png" width="1000px">
 </p>
 
 To complete the process right click on the project "INSTALL" and build it.
 
 <p  align="center">
-  <img src="img/rp3d/build_install.png" width="1000px">
+  <img src="../img/rp3d/build_install.png" width="1000px">
 </p>
 
 Now you will find all the necessary files to use the library in your project inside the folder you specified before generating with cmake (the CMAKE_INSTALL_PREFIX setting).
@@ -76,25 +76,25 @@ Now that you have all the files you need you can open your Visual Studio project
 Add the path to ReactPhysics3D's include directory inside the "Additional include directories" setting under the "C/C++" section of the properties.
 
 <p  align="center">
-  <img src="img/rp3d/include_dir.png" width="600px">
+  <img src="../img/rp3d/include_dir.png" width="600px">
 </p>
 
 Add the path to ReactPhysics3D's lib directory inside the "Additional lib directories" setting under the "Linker->General" section of the properties.
 
 <p  align="center">
-  <img src="img/rp3d/lib_dir.png" width="600px">
+  <img src="../img/rp3d/lib_dir.png" width="600px">
 </p>
 
 Add the name of ReactPhysics3D's .lib file inside the "Additional dependencies" setting under the "Linker->Input" section of the properties.
 
 <p  align="center">
-  <img src="img/rp3d/lib_dep.png" width="600px">
+  <img src="../img/rp3d/lib_dep.png" width="600px">
 </p>
 
 Now you can copy and run the [HelloWorld](#reactphysics3d-helloworld) script from ReactPhysics3D to check that everything is working correctly.
 
 <p  align="center">
-  <img src="img/rp3d/hello_world.png" width="1000px">
+  <img src="../img/rp3d/hello_world.png" width="1000px">
 </p>
 
 For further details about building and installing the library you can check out section [4](https://www.reactphysics3d.com/usermanual#x1-50004) and [5](https://www.reactphysics3d.com/usermanual#x1-160005) of the user manual.
@@ -107,7 +107,7 @@ In the user manual you can find detailed descriptions of how to use the various 
 Now that you have ReactPhysics3D at your disposal you can build a basic application that applies physics to objects rendered using GLUT. The result will look like this:
 
 <p  align="center">
-  <img src="img/rp3d/rp3d_glut_example.gif" width="600px">
+  <img src="../img/rp3d/rp3d_glut_example.gif" width="600px">
 </p>
 
 Full code of the example [here](#integration-of-reactphysics3d-with-glut).

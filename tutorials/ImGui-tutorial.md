@@ -31,8 +31,8 @@ All the files you need are already there, you can find the core files in the roo
 - imgui_impl_opengl2.cpp
 
 <p align="center">
-  <img src="img/imgui/core_files.png" width="400px">
-  <img src="img/imgui/glut_files.png" width="400px">
+  <img src="../img/imgui/core_files.png" width="400px">
+  <img src="../img/imgui/glut_files.png" width="400px">
 </p>
 
 ### Use the library inside your VS project
@@ -41,7 +41,7 @@ Now that you have all the files you need you can open your Visual Studio project
 Add the path to the folder containing ImGui's .h files inside the "Additional include directories" setting under the "C/C++" section of the properties.
 
 <p align="center">
-  <img src="img/imgui/include_dir.png" width="600px">
+  <img src="../img/imgui/include_dir.png" width="600px">
 </p>
 
 Add ImGui's .cpp files to your project's source files. If you're using glut instead of freeglut you have to change line 36 of "imgui_impl_glut.cpp" from:
