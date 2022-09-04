@@ -153,12 +153,23 @@ floorBody->addCollider(floorShape, rp3d::Transform::identity());
 floorBody->setType(BodyType::STATIC);
 ```
 
-Now that the RigidBodies' setup is complete you just need to call the update function of the PhysicsWorld inside the idle callback.
-
+Now that the RigidBodies' setup is complete you need to update the PhysicsWorld with a constant timestep. You can use a function like this:
 ```c++
-world->update(timeStep);
-glutPostRedisplay();
+void updatePhysicsWorld()
+{
+	long double currentFrameTime = getCurrentSystemTime();
+	long double deltaTime = currentFrameTime - previousFrameTime
+
+	previousFrameTime = currentFrameTime;
+	accumulator += deltaTime;
+
+	while (accumulator >= timeStep) {
+		world->update(timeStep);
+		accumulator -= timeStep;
+	}
+}
 ```
+and call it inside the idle callback.
 
 The next step is to draw GLUT primitives in the right places, to do that you can (inside the display callback) get the current transform of the RigidBody, extract the corresponding homogeneus transformation matrix from it and multiply the matrix by the primitive you need to draw.
 
@@ -268,7 +279,10 @@ using namespace rp3d;
 
 PhysicsCommon physicsCommon;
 PhysicsWorld *world = physicsCommon.createPhysicsWorld();
+
 const decimal timeStep = 1.0f / 60.0f;
+long double previousFrameTime;
+long double accumulator = 0;
 
 // Cube
 Vector3 cubeSize(0.5, 0.5, 0.5);
@@ -281,6 +295,9 @@ Vector3 floorSize(5, 0.4, 2);
 Vector3 floorInitPosition(0, -0.8, 0);
 Quaternion floorInitOrientation = Quaternion::identity();
 RigidBody *floorBody;
+
+// Util to get system time
+long double getCurrentSystemTime() { return ((long double)std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) / 1000; }
 
 void init(void)
 {
@@ -315,6 +332,8 @@ void init(void)
 	floorBody->addCollider(floorShape, rp3d::Transform::identity());			// Add collider to rigidbody
 
 	floorBody->setType(BodyType::STATIC);										// Set floor rigidbody type to static
+
+	previousFrameTime = getCurrentSystemTime();									// Init previous time for updatePhysicsWorld function
 }
 
 void drawBoxFromRigidBody(Vector3 boxSize, RigidBody *boxBody, GLfloat matColor[4])
@@ -346,11 +365,27 @@ void display(void)
 	glutSwapBuffers();
 }
 
+void updatePhysicsWorld()
+{	
+	long double currentFrameTime = getCurrentSystemTime();				// Get the current system time	
+	long double deltaTime = currentFrameTime - previousFrameTime;		// Compute the time difference between the two frames
+	
+	previousFrameTime = currentFrameTime;								// Update the previous time	 
+	accumulator += deltaTime;											// Add the time difference in the accumulator
+
+	// While there is enough accumulated time to take 
+	// one or several physics steps 
+	while (accumulator >= timeStep) {		 
+		world->update(timeStep);										// Update the Dynamics world with a constant timestep		 
+		accumulator -= timeStep;										// Decrease the accumulated time
+	}
+}
+
 void idle(void)
 {
 	if (simulate)
 	{
-		world->update(timeStep);		// Update physics world
+		updatePhysicsWorld();		// Update physics world with a constant timestep
 		glutPostRedisplay();
 	}
 }
